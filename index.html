@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proper Motion — We put perspective in motion</title>
+  <meta name="description" content="Proper Motion is a creative technology studio that partners with scientists and researchers to build immersive, interactive experiences from complex data.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #050810;
+      --text: #dde3f0;
+      --muted: #6b7a99;
+      --accent: #38c8ff;
+      --accent2: #7c5af0;
+      --card-bg: rgba(255,255,255,0.03);
+      --card-border: rgba(56, 200, 255, 0.12);
+      --radius: 16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 4rem;
+      background: rgba(5, 8, 16, 0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .nav-logo { height: 28px; width: auto; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1.375rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+    }
+
+    .btn-primary { background: var(--accent); color: #050810; }
+    .btn-primary:hover {
+      background: #60d5ff;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px rgba(56, 200, 255, 0.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 2rem;
+      overflow: hidden;
+    }
+
+    #starfield { position: absolute; inset: 0; z-index: 0; }
+
+    .hero-glow {
+      position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(56,200,255,0.07) 0%, transparent 70%);
+      border-radius: 50%;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 920px; }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.625rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 28px; height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(3rem, 7.5vw, 6.25rem);
+      font-weight: 700;
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(130deg, var(--accent) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      color: var(--muted);
+      max-width: 580px;
+      margin: 0 auto 2.75rem;
+      line-height: 1.75;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+
+    .hero-ctas .btn { font-size: 0.9375rem; padding: 0.75rem 1.75rem; }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.625rem;
+      color: var(--muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeIn 1s 1.4s forwards;
+    }
+
+    .scroll-line {
+      width: 1px; height: 44px;
+      background: linear-gradient(to bottom, rgba(107,122,153,0.8), transparent);
+      animation: scrollPulse 2.5s ease-in-out infinite;
+    }
+
+    /* ── SHARED SECTION STYLES ── */
+    section {
+      padding: 8rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-full { max-width: 100%; padding: 8rem 0; }
+    .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 4rem; }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+    }
+
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 18px; height: 1px;
+      background: var(--accent);
+    }
+
+    h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: #fff;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .section-intro {
+      font-size: 1.0625rem;
+      color: var(--muted);
+      max-width: 580px;
+      margin-bottom: 4rem;
+      line-height: 1.8;
+    }
+
+    /* ── SERVICES ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .service-card:hover {
+      border-color: rgba(56,200,255,0.22);
+      background: rgba(56,200,255,0.035);
+      transform: translateY(-5px);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+    }
+
+    .service-card:hover::after { opacity: 1; }
+
+    .service-icon {
+      width: 48px; height: 48px;
+      background: rgba(56,200,255,0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.75rem;
+      color: var(--accent);
+    }
+
+    .service-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .service-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3125rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .service-card p {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .service-detail {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.8125rem;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+    }
+
+    /* ── PROJECT ── */
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      min-height: 500px;
+      transition: box-shadow 0.3s;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(56,200,255,0.18);
+    }
+
+    .project-visual { position: relative; background: #060c18; overflow: hidden; }
+
+    #nebula { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+    .project-badge {
+      position: absolute;
+      top: 1.5rem; left: 1.5rem;
+      z-index: 2;
+      background: rgba(56,200,255,0.12);
+      border: 1px solid rgba(56,200,255,0.28);
+      border-radius: 100px;
+      padding: 0.375rem 0.875rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .project-info {
+      padding: 3.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .project-collab {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.875rem;
+    }
+
+    .project-partners {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.375rem 0.75rem;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .partner-chip { font-size: 0.8125rem; color: var(--text); font-weight: 500; }
+
+    .partner-sep {
+      width: 4px; height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: 0.6;
+    }
+
+    .project-info h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.6rem, 2.5vw, 2.1rem);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-info p {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.9375rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+    .tag {
+      font-size: 0.75rem;
+      padding: 0.35rem 0.75rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 100px;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-text h2 { margin-bottom: 1.5rem; }
+
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.85;
+      font-size: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .about-text p:last-of-type { margin-bottom: 2rem; }
+
+    .about-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: gap 0.2s;
+    }
+
+    .about-link:hover { gap: 0.75rem; }
+
+    .about-visual {
+      position: relative;
+      aspect-ratio: 4/3;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #080f20 0%, #0d1830 100%);
+      border: 1px solid var(--card-border);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-visual canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+    .about-icon-mark {
+      position: relative;
+      z-index: 1;
+      width: 120px;
+      opacity: 0.85;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 8rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at center, rgba(56,200,255,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-content { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+    .cta-content h2 { margin-bottom: 1.25rem; }
+
+    .cta-content p {
+      color: var(--muted);
+      font-size: 1.0625rem;
+      line-height: 1.8;
+      margin-bottom: 2.75rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-actions .btn { font-size: 1rem; padding: 0.875rem 2.25rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2.5rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo { height: 22px; width: auto; }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .footer-copy { font-size: 0.8125rem; color: var(--muted); }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-social {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+    }
+
+    .footer-social a {
+      color: var(--muted);
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-social a:hover { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50%       { opacity: 0.9; transform: scaleY(1.08); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      nav { padding: 1rem 2rem; }
+      section { padding: 6rem 2rem; }
+      .section-inner { padding: 0 2rem; }
+      .section-full { padding: 6rem 0; }
+      .services-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .project-card { grid-template-columns: 1fr; }
+      .project-visual { min-height: 260px; }
+      .project-info { padding: 2rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-visual { display: none; }
+      footer { padding: 2rem; flex-direction: column; gap: 1.5rem; text-align: center; }
+      .footer-right { flex-direction: column; gap: 1rem; }
+      .cta-section { padding: 6rem 2rem; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hero-scroll { display: none; }
+      h1 { font-size: 2.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <img src="images/Logo/proper-motion-logo-horizontal-white.svg" alt="Proper Motion" class="nav-logo">
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="https://calendly.com/charlene-atlas/30min" target="_blank" rel="noopener" class="btn btn-primary">Book a Call</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <canvas id="starfield"></canvas>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Creative Technology Studio</div>
+      <h1>We put <em>perspective</em><br>in motion.</h1>
+      <p class="hero-sub">Proper Motion partners with scientists, researchers, and institutions to transform complex data into immersive, interactive experiences that move people.</p>
+      <div class="hero-ctas">
+        <a href="#services" class="btn btn-primary">Our Services</a>
+        <a href="#contact" class="btn btn-outline">Start a Conversation</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-label reveal">How we work</div>
+    <h2 class="reveal">Built for the way<br>science actually works.</h2>
+    <p class="section-intro reveal">Every collaboration is different. We offer three engagement models designed to fit where you are — whether you need an embedded partner, a defined deliverable, or a true co-investigator.</p>
+
+    <div class="services-grid">
+
+      <div class="service-card reveal reveal-d1">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="service-tag">Retainer</div>
+        <h3>Fractional Partner</h3>
+        <p>An embedded creative technologist in your team — a few days a week, on an ongoing basis. Strategic advisory, hands-on development, and design thinking woven directly into your research workflow.</p>
+        <div class="service-detail">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Ongoing engagement
+        </div>
+      </div>
+
+      <div class="service-card reveal reveal-d2">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <div class="service-tag">Project-Based</div>
+        <h3>Scoped Projects</h3>
+        <p>A clear brief, a defined end deliverable, a set timeline. We scope, design, and build interactive experiences, visualizations, and tools — with structured milestones and phased payments from start to finish.</p>
+        <div class="service-detail">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Milestone-driven
+        </div>
+      </div>
+
+      <div class="service-card reveal reveal-d3">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+          </svg>
+        </div>
+        <div class="service-tag">R&amp;D Co-Development</div>
+        <h3>Experimental R&amp;D</h3>
+        <p>True co-investigation — from frontier concept to published research. We partner with scientists and institutions on new ideas: co-authoring papers, presenting at conferences, and building new categories of experience together.</p>
+        <div class="service-detail">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          Joint publication &amp; exhibition
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <div class="section-full" id="work">
+    <div class="section-inner">
+      <div class="section-label reveal">Featured Work</div>
+      <h2 class="reveal" style="margin-bottom: 3.5rem;">Where science meets<br>the senses.</h2>
+
+      <div class="project-card reveal">
+        <div class="project-visual">
+          <canvas id="nebula"></canvas>
+          <div class="project-badge">Active Project</div>
+        </div>
+        <div class="project-info">
+          <div class="project-collab">In collaboration with</div>
+          <div class="project-partners">
+            <span class="partner-chip">Center for Astrophysics | Harvard &amp; Smithsonian</span>
+            <span class="partner-sep"></span>
+            <span class="partner-chip">Chandra X-ray Observatory</span>
+          </div>
+          <h3>Hearing Spatial Structure</h3>
+          <p>An immersive project exploring how the architecture of the cosmos can be experienced through sound. In collaboration with Kimberly Arcand, we're translating the spatial data of X-ray astronomical observations into auditory landscapes — making the invisible structure of our universe perceptible in entirely new ways.</p>
+          <div class="project-tags">
+            <span class="tag">Sonification</span>
+            <span class="tag">X-ray Astronomy</span>
+            <span class="tag">Immersive Audio</span>
+            <span class="tag">Scientific Outreach</span>
+            <span class="tag">R&amp;D Co-Development</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-label reveal">About</div>
+        <h2 class="reveal">Science deserves a<br>creative partner.</h2>
+        <p class="reveal">Proper Motion was founded on the belief that the most important ideas in the world are trapped inside datasets, papers, and labs — and that the right creative technology can set them free.</p>
+        <p class="reveal">We work at the intersection of design, engineering, and scientific research to build experiences that don't just inform — they shift perspective. Our collaborations span immersive audio, interactive data visualization, installations, and experimental media.</p>
+        <a href="https://charleneatlas.com" target="_blank" rel="noopener" class="about-link reveal">
+          Meet the founder
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="about-visual">
+        <canvas id="about-canvas"></canvas>
+        <img src="images/Logo/proper-motion-icon-white.svg" alt="" class="about-icon-mark">
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACT -->
+  <div class="cta-section" id="contact">
+    <div class="cta-bg"></div>
+    <div class="cta-content">
+      <div class="section-label reveal" style="justify-content:center; margin-bottom:1.5rem;">Work with us</div>
+      <h2 class="reveal">Ready to bring your<br>research to life?</h2>
+      <p class="reveal">Whether you have a clear brief or just a compelling question, let's talk about what we can build together.</p>
+      <div class="cta-actions reveal">
+        <a href="https://calendly.com/charlene-atlas/30min" target="_blank" rel="noopener" class="btn btn-primary">Book a Call</a>
+        <a href="mailto:hello@propermotion.co" class="btn btn-outline">Send a Message</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <img src="images/Logo/proper-motion-logo-horizontal-white.svg" alt="Proper Motion" class="footer-logo">
+    <div class="footer-right">
+      <ul class="footer-links">
+        <li><a href="https://charleneatlas.com" target="_blank" rel="noopener">charleneatlas.com</a></li>
+      </ul>
+      <div class="footer-social">
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/charleneatlas/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+        </a>
+      </div>
+      <span class="footer-copy">&copy; 2026 Proper Motion</span>
+    </div>
+  </footer>
+
+  <script>
+    // ── STARFIELD ──
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resizeStarfield() {
+      canvas.width = window.innerWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+      initStars();
+    }
+
+    function initStars() {
+      stars = [];
+      const count = Math.floor((canvas.width * canvas.height) / 5500);
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.4 + 0.15,
+          baseOpacity: Math.random() * 0.65 + 0.1,
+          phase: Math.random() * Math.PI * 2,
+          twinkle: Math.random() * 0.004 + 0.001
+        });
+      }
+    }
+
+    let t = 0;
+    function animateStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      t += 0.008;
+      for (const s of stars) {
+        const op = s.baseOpacity * (0.55 + 0.45 * Math.sin(t * s.twinkle * 80 + s.phase));
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${op})`;
+        ctx.fill();
+      }
+      requestAnimationFrame(animateStars);
+    }
+
+    resizeStarfield();
+    animateStars();
+    window.addEventListener('resize', resizeStarfield);
+
+    // ── NEBULA (project card) ──
+    function drawNebula(el) {
+      const w = el.width = el.parentElement.clientWidth;
+      const h = el.height = el.parentElement.clientHeight;
+      const nc = el.getContext('2d');
+
+      nc.fillStyle = '#060c18';
+      nc.fillRect(0, 0, w, h);
+
+      const blobs = [
+        { x: 0.48, y: 0.44, r: 0.38, color: 'rgba(40,90,255,0.18)' },
+        { x: 0.32, y: 0.58, r: 0.26, color: 'rgba(56,200,255,0.13)' },
+        { x: 0.66, y: 0.38, r: 0.22, color: 'rgba(124,90,240,0.16)' },
+        { x: 0.58, y: 0.62, r: 0.30, color: 'rgba(20,140,255,0.10)' },
+        { x: 0.22, y: 0.30, r: 0.18, color: 'rgba(80,200,255,0.08)' },
+      ];
+
+      for (const b of blobs) {
+        const grd = nc.createRadialGradient(b.x*w, b.y*h, 0, b.x*w, b.y*h, b.r * Math.max(w, h));
+        grd.addColorStop(0, b.color);
+        grd.addColorStop(1, 'transparent');
+        nc.fillStyle = grd;
+        nc.fillRect(0, 0, w, h);
+      }
+
+      for (let i = 0; i < 220; i++) {
+        const x = Math.random() * w, y = Math.random() * h;
+        nc.beginPath();
+        nc.arc(x, y, Math.random() * 1.1 + 0.1, 0, Math.PI*2);
+        nc.fillStyle = `rgba(255,255,255,${Math.random() * 0.75 + 0.1})`;
+        nc.fill();
+      }
+      for (let i = 0; i < 10; i++) {
+        nc.beginPath();
+        nc.arc(Math.random()*w, Math.random()*h, Math.random()*1.8+0.8, 0, Math.PI*2);
+        nc.fillStyle = 'rgba(200,235,255,0.95)';
+        nc.fill();
+      }
+    }
+
+    // ── ABOUT CANVAS ──
+    function drawAboutCanvas(el) {
+      const w = el.width = el.parentElement.clientWidth;
+      const h = el.height = el.parentElement.clientHeight;
+      const ac = el.getContext('2d');
+
+      ac.fillStyle = '#080f20';
+      ac.fillRect(0, 0, w, h);
+
+      const blobs2 = [
+        { x: 0.6, y: 0.4, r: 0.5, color: 'rgba(56,200,255,0.07)' },
+        { x: 0.3, y: 0.6, r: 0.4, color: 'rgba(124,90,240,0.09)' },
+      ];
+      for (const b of blobs2) {
+        const grd = ac.createRadialGradient(b.x*w, b.y*h, 0, b.x*w, b.y*h, b.r * Math.max(w, h));
+        grd.addColorStop(0, b.color);
+        grd.addColorStop(1, 'transparent');
+        ac.fillStyle = grd;
+        ac.fillRect(0, 0, w, h);
+      }
+      for (let i = 0; i < 120; i++) {
+        ac.beginPath();
+        ac.arc(Math.random()*w, Math.random()*h, Math.random()*1.0+0.1, 0, Math.PI*2);
+        ac.fillStyle = `rgba(255,255,255,${Math.random()*0.5+0.05})`;
+        ac.fill();
+      }
+    }
+
+    setTimeout(() => {
+      const nebula = document.getElementById('nebula');
+      const aboutCanvas = document.getElementById('about-canvas');
+      drawNebula(nebula);
+      if (aboutCanvas) drawAboutCanvas(aboutCanvas);
+      window.addEventListener('resize', () => {
+        drawNebula(nebula);
+        if (aboutCanvas) drawAboutCanvas(aboutCanvas);
+      });
+    }, 50);
+
+    // ── SCROLL REVEAL ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
