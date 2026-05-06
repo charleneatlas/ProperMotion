@@ -600,6 +600,58 @@
     .reveal-d2 { transition-delay: 0.2s; }
     .reveal-d3 { transition-delay: 0.3s; }
 
+    /* ── MOVE CALLOUT ── */
+    .move-callout {
+      margin: 1.5rem 0 2rem;
+      border-left: 2px solid var(--accent);
+      padding-left: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .move-callout span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+
+    /* ── METHOD ── */
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      margin-top: 3.5rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .method-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-bottom: 0.875rem;
+    }
+
+    .method-item h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.0625rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.625rem;
+      letter-spacing: -0.01em;
+    }
+
+    .method-item p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
       nav { padding: 1rem 2rem; }
@@ -612,6 +664,7 @@
       .project-info { padding: 2rem; }
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
       .about-visual { display: none; }
+      .method-grid { grid-template-columns: 1fr; gap: 2rem; }
       footer { padding: 2rem; flex-direction: column; gap: 1.5rem; text-align: center; }
       .footer-right { flex-direction: column; gap: 1rem; }
       .cta-section { padding: 6rem 2rem; }
@@ -645,7 +698,7 @@
     <div class="hero-content">
       <div class="hero-eyebrow">Creative Technology Studio</div>
       <h1>We put <em>perspective</em><br>in motion.</h1>
-      <p class="hero-sub">Proper Motion partners with scientists, researchers, and institutions to transform complex data into immersive, interactive experiences that move people.</p>
+      <p class="hero-sub">Proper Motion partners with scientists, researchers, and institutions to transform complex data into immersive XR, spatial, and multimodal experiences — where research isn't just observed, it's inhabited.</p>
       <div class="hero-ctas">
         <a href="#services" class="btn btn-primary">Our Services</a>
         <a href="#contact" class="btn btn-outline">Start a Conversation</a>
@@ -757,6 +810,11 @@
         <h2 class="reveal">Science deserves a<br>creative partner.</h2>
         <p class="reveal">Proper Motion was founded on the belief that the most important ideas in the world are trapped inside datasets, papers, and labs — and that the right creative technology can set them free.</p>
         <p class="reveal">We work at the intersection of design, engineering, and scientific research to build experiences that don't just inform — they shift perspective. Our collaborations span immersive audio, interactive data visualization, installations, and experimental media.</p>
+        <div class="move-callout reveal">
+          <span>Move people to understand.</span>
+          <span>Move people to remember.</span>
+          <span>Move people to feel.</span>
+        </div>
         <a href="https://charleneatlas.com" target="_blank" rel="noopener" class="about-link reveal">
           Meet the founder
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -765,6 +823,29 @@
       <div class="about-visual">
         <canvas id="about-canvas"></canvas>
         <img src="images/Logo/proper-motion-icon-white.svg" alt="" class="about-icon-mark">
+      </div>
+    </div>
+  </section>
+
+  <!-- METHOD -->
+  <section>
+    <div class="section-label reveal">Our Approach</div>
+    <h2 class="reveal">The Proper Motion Method</h2>
+    <div class="method-grid">
+      <div class="method-item reveal reveal-d1">
+        <div class="method-number">01</div>
+        <h4>Insight Through Interaction</h4>
+        <p>Understanding emerges through interaction, experimentation, and exploration — not passive observation. We design systems where the act of engaging is the act of learning.</p>
+      </div>
+      <div class="method-item reveal reveal-d2">
+        <div class="method-number">02</div>
+        <h4>Embodied Understanding</h4>
+        <p>Complex data becomes intuitive through spatial, visual, and auditory experience working together. We translate the unreachable — light-years, centuries, spectral lines — into something you can stand inside.</p>
+      </div>
+      <div class="method-item reveal reveal-d3">
+        <div class="method-number">03</div>
+        <h4>Dynamic Discovery</h4>
+        <p>We don't design fixed narratives. We design for open-ended exploration where the path is shaped by curiosity — the user's and the scientist's alike.</p>
       </div>
     </div>
   </section>
