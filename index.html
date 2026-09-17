@@ -4,8 +4,15 @@
   <script>document.documentElement.classList.add('js');</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Proper Motion — Science Experience Studio</title>
-  <meta name="description" content="Proper Motion is a science experience studio that helps scientists, research teams, and institutions turn complex ideas into interactive experiences people can explore, understand, and feel.">
+  <title>Proper Motion | Interactive Experiences That Make Science Tangible</title>
+  <meta name="description" content="Proper Motion is a science experience studio building interactive experiences that make complex science tangible. We partner with science communication leaders to turn difficult ideas and data into experiences public audiences can understand, feel, and take part in, with particular depth in astronomy and space science.">
+  <meta name="theme-color" content="#05070e">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <meta property="og:title" content="Proper Motion | Interactive Experiences That Make Science Tangible">
+  <meta property="og:description" content="We partner with science communication leaders to turn difficult ideas and data into experiences public audiences can understand, feel, and take part in.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://propermotion.co/">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -13,15 +20,18 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #050810;
-      --text: #dde3f0;
-      --muted: #6b7a99;
+      /* ── dark system (primary) ── */
+      --bg: #05070e;
+      --bg-2: #0a0e1a;
+      --text: #e4e9f4;
+      --muted: #8d99b3;
       --accent: #5a9cae;
+      --hairline: rgba(255,255,255,0.07);
       --card-border: rgba(255,255,255,0.09);
       --radius: 16px;
 
-      /* ── light-system tokens ── */
-      --light-bg: #f4f1ea;
+      /* ── light system (used sparingly, for rhythm) ── */
+      --light-bg: #f3f5f8;
       --light-bg-2: #e9edf2;
       --navy: #10182c;
       --navy-muted: #4c5573;
@@ -51,9 +61,16 @@
     a:focus-visible,
     button:focus-visible,
     .btn:focus-visible {
-      outline: 2px solid var(--accent-ink);
+      outline: 2px solid var(--accent);
       outline-offset: 3px;
       border-radius: 6px;
+    }
+
+    /* Inside a light band the dark-system accent loses contrast, so swap it. */
+    .section-light a:focus-visible,
+    .section-light button:focus-visible,
+    .section-light .btn:focus-visible {
+      outline-color: var(--accent-ink);
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -83,9 +100,9 @@
       align-items: center;
       padding: 1rem 4rem;
       min-height: var(--nav-height);
-      background: rgba(244, 241, 234, 0.88);
+      background: rgba(5, 7, 14, 0.82);
       backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(16, 24, 44, 0.08);
+      border-bottom: 1px solid var(--hairline);
     }
 
     nav > .btn { justify-self: end; }
@@ -100,7 +117,7 @@
     }
 
     .nav-links a {
-      color: var(--navy-muted);
+      color: var(--muted);
       text-decoration: none;
       font-size: 1.0625rem;
       font-weight: 500;
@@ -108,7 +125,7 @@
       transition: color 0.2s;
     }
 
-    .nav-links a:hover { color: var(--navy); }
+    .nav-links a:hover { color: var(--text); }
 
     .nav-toggle {
       display: none;
@@ -117,9 +134,9 @@
       justify-content: center;
       width: 44px; height: 44px;
       background: transparent;
-      border: 1px solid rgba(16,24,44,0.15);
+      border: 1px solid rgba(255,255,255,0.18);
       border-radius: 8px;
-      color: var(--navy);
+      color: var(--text);
       cursor: pointer;
     }
 
@@ -130,9 +147,9 @@
       position: fixed;
       top: var(--nav-height); left: 0; right: 0;
       z-index: 99;
-      background: var(--light-bg);
-      border-bottom: 1px solid rgba(16,24,44,0.08);
-      box-shadow: 0 16px 40px rgba(16,24,44,0.12);
+      background: #0a0e1a;
+      border-bottom: 1px solid var(--hairline);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
       padding: 1.5rem 2rem 2rem;
     }
 
@@ -147,7 +164,7 @@
     }
 
     .mobile-menu a.mobile-link {
-      color: var(--navy);
+      color: var(--text);
       text-decoration: none;
       font-size: 1.125rem;
       font-weight: 600;
@@ -170,7 +187,7 @@
       font-family: inherit;
     }
 
-    .btn-primary { background: var(--accent); color: #050810; }
+    .btn-primary { background: var(--accent); color: #04070d; }
     .btn-primary:hover {
       background: #71add0;
       transform: translateY(-1px);
@@ -183,15 +200,21 @@
     }
     .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* ── HERO (light system) ── */
-    .hero-light {
+    /* ── HERO ── */
+    .hero {
       position: relative;
       min-height: 92vh;
       display: flex;
       align-items: center;
-      background: var(--light-bg);
-      color: var(--navy);
+      /* Two very low-amplitude washes give the dark ground some depth without
+         reading as a starfield or a neon gradient. */
+      background:
+        radial-gradient(1100px 640px at 16% 10%, rgba(90,156,174,0.10), transparent 62%),
+        radial-gradient(980px 720px at 90% 84%, rgba(40,72,122,0.16), transparent 68%),
+        var(--bg);
+      color: var(--text);
       padding: calc(var(--nav-height) + 3rem) 4rem 6rem;
+      border-bottom: 1px solid var(--hairline);
     }
 
     .hero-grid {
@@ -204,7 +227,7 @@
       margin: 0 auto;
     }
 
-    .hero-light-inner { position: relative; z-index: 1; flex: 1 1 620px; max-width: 800px; }
+    .hero-inner { position: relative; z-index: 1; flex: 1 1 620px; max-width: 760px; }
 
     .hero-media { flex: 0 0 380px; align-self: stretch; }
 
@@ -214,8 +237,9 @@
       aspect-ratio: 4 / 5;
       border-radius: var(--radius);
       overflow: hidden;
-      background: linear-gradient(160deg, #ece6d8 0%, #ddd5c2 100%);
-      border: 1px solid rgba(16,24,44,0.08);
+      background: linear-gradient(160deg, #1e2740 0%, #0c1220 100%);
+      border: 1px solid rgba(255,255,255,0.13);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
     }
 
     .hero-media-img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -314,11 +338,11 @@
     .eq-item {
       position: absolute;
       font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
-      color: rgba(16,24,44,0.4);
+      color: rgba(197,211,236,0.34);
       white-space: nowrap;
     }
 
-    .eyebrow-onlight {
+    .hero-eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 0.625rem;
@@ -326,60 +350,69 @@
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--accent-ink);
+      color: var(--accent);
       margin-bottom: 1.75rem;
       opacity: 0;
       animation: fadeUp 0.8s 0.2s forwards;
     }
 
-    .eyebrow-onlight::before {
+    .hero-eyebrow::before {
       content: '';
       display: inline-block;
       width: 28px; height: 1px;
-      background: var(--accent-ink);
+      background: var(--accent);
     }
 
-    .hero-light h1 {
+    .hero h1 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.75rem, 6.5vw, 5.75rem);
+      font-size: clamp(2.35rem, 4.6vw, 4.125rem);
       font-weight: 700;
-      line-height: 1.08;
+      line-height: 1.07;
       letter-spacing: -0.03em;
-      color: var(--navy);
+      color: #fff;
       margin-bottom: 1.75rem;
       opacity: 0;
       animation: fadeUp 0.8s 0.4s forwards;
     }
 
-    .hero-light h1 .accent-word { color: var(--accent-ink); font-style: normal; }
+    .hero h1 .accent-word { color: var(--accent); font-style: normal; }
 
-    .hero-sub-light {
+    .hero-sub {
       font-size: clamp(1.05rem, 1.6vw, 1.25rem);
-      color: var(--navy-muted);
-      max-width: 560px;
-      margin: 0 0 2.5rem;
+      color: var(--muted);
+      max-width: 620px;
+      margin: 0 0 2rem;
       line-height: 1.7;
       opacity: 0;
       animation: fadeUp 0.8s 0.6s forwards;
     }
 
-    .hero-ctas-light {
+    /* Specialization note: reads as a footnote to the promise above it, so the
+       astronomy depth is unmissable without narrowing the audience. */
+    .hero-note {
+      max-width: 620px;
+      margin: 0 0 2.5rem;
+      padding-left: 1.125rem;
+      border-left: 2px solid rgba(90,156,174,0.55);
+      font-size: 0.9375rem;
+      line-height: 1.75;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeUp 0.8s 0.72s forwards;
+    }
+
+    .hero-note strong { color: var(--text); font-weight: 600; }
+
+    .hero-ctas {
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
       align-items: center;
       opacity: 0;
-      animation: fadeUp 0.8s 0.8s forwards;
+      animation: fadeUp 0.8s 0.86s forwards;
     }
 
-    .hero-ctas-light .btn { font-size: 0.9375rem; padding: 0.875rem 1.75rem; }
-
-    .btn-outline-light {
-      background: transparent;
-      color: var(--navy);
-      border: 1px solid rgba(16,24,44,0.25);
-    }
-    .btn-outline-light:hover { border-color: var(--accent-ink); color: var(--accent-ink); }
+    .hero-ctas .btn { font-size: 0.9375rem; padding: 0.875rem 1.75rem; }
 
     /* ── SHARED SECTION STYLES ── */
     section {
@@ -425,7 +458,30 @@
       line-height: 1.8;
     }
 
-    /* ── LIGHT SECTION SYSTEM ── */
+    /* ── BANDS ──
+       Base `section` is width-capped, which stops a colored band from reaching
+       the viewport edge. Banded sections opt out of the cap and hand the gutter
+       to an inner wrapper instead. */
+    .section-band {
+      max-width: none;
+      width: 100%;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .section-inner {
+      max-width: var(--content-width);
+      margin: 0 auto;
+      padding: 0 4rem;
+    }
+
+    .section-dark-alt {
+      background: var(--bg-2);
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    /* ── LIGHT SECTION SYSTEM (used selectively, for rhythm) ── */
     .section-light {
       background: var(--light-bg);
       color: var(--navy);
@@ -440,7 +496,17 @@
 
     .section-light h2 { color: var(--navy); }
 
-    .section-light .brand-statement,
+    .section-light .brand-statement {
+      font-style: normal;
+      font-size: clamp(1.25rem, 2vw, 1.6rem);
+      line-height: 1.45;
+      letter-spacing: -0.015em;
+      color: var(--navy);
+      max-width: 34ch;
+      opacity: 1;
+      margin-bottom: 3.5rem;
+    }
+
     .section-light .section-intro,
     .section-light .about-text p,
     .section-light .method-item p {
@@ -462,12 +528,14 @@
     /* ── SELECTED WORK ── */
     #selected-work {
       background: var(--bg);
-      padding: 8rem 4rem 9rem;
+      padding: 8rem 0 9rem;
+      max-width: none;
+      width: 100%;
     }
 
-    .selected-work-inner { max-width: var(--content-width); margin: 0 auto; }
+    .selected-work-inner { max-width: var(--content-width); margin: 0 auto; padding: 0 4rem; }
 
-    .selected-work-head { max-width: 640px; margin-bottom: 3.5rem; }
+    .selected-work-head { max-width: 680px; margin-bottom: 3.5rem; }
 
     .brand-statement {
       font-family: 'Space Grotesk', sans-serif;
@@ -480,11 +548,12 @@
 
     .work-grid {
       display: grid;
-      grid-template-columns: 7fr 5fr;
+      grid-template-columns: repeat(12, 1fr);
       gap: 2rem;
     }
 
     .work-panel {
+      grid-column: span 12;
       position: relative;
       border-radius: var(--radius);
       overflow: hidden;
@@ -505,7 +574,9 @@
       pointer-events: none;
     }
 
-    .work-panel.secondary { min-height: 560px; }
+    .work-panel--7 { grid-column: span 7; }
+    .work-panel--5 { grid-column: span 5; }
+    .work-panel--full { grid-column: span 12; min-height: 420px; }
 
     .work-panel:hover {
       box-shadow: 0 38px 84px rgba(0,0,0,0.62), 0 14px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.09);
@@ -521,6 +592,14 @@
       z-index: 0;
     }
 
+    /* Video panels sit on their own black so a letterboxed frame or a slow
+       first paint never flashes the panel gradient through. */
+    video.work-panel-img { background: #04070d; }
+
+    /* For artwork whose own subject sits high in the frame, anchor near the top
+       so it clears the heading block in the overlay below. */
+    .work-panel-img--top { object-position: center 24%; }
+
     /* One continuous darkening sweep across the whole panel — lighter at the top
        for badge contrast, heavier at the bottom for the heading/copy block.
        Deliberately a single gradient (not stacked with the overlay below) so
@@ -531,6 +610,14 @@
       background: linear-gradient(to top, rgba(4,7,14,0.97) 0%, rgba(4,7,14,0.65) 45%, rgba(4,7,14,0.32) 100%);
       z-index: 1;
       pointer-events: none;
+    }
+
+    .work-panel--scrim-strong .work-panel-scrim {
+      background: linear-gradient(to top,
+        rgba(4,7,14,1) 0%,
+        rgba(4,7,14,1) 47%,
+        rgba(4,7,14,0.72) 70%,
+        rgba(4,7,14,0.36) 100%);
     }
 
     .work-panel-badge {
@@ -582,6 +669,30 @@
       max-width: 46ch;
     }
 
+    .work-foot {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      flex-wrap: wrap;
+    }
+
+    .work-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .work-link:hover { color: #8fc6d6; }
+    .work-link svg { transition: transform 0.2s; }
+    .work-link:hover svg { transform: translate(2px, -2px); }
+
     .work-role {
       display: inline-flex;
       font-size: 0.72rem;
@@ -632,9 +743,9 @@
       position: relative;
       aspect-ratio: 4/3;
       border-radius: 20px;
-      background: linear-gradient(135deg, #ded7c6 0%, #d3ccb8 100%);
-      border: 1px solid rgba(16, 24, 44, 0.1);
-      box-shadow: 0 24px 56px rgba(16, 24, 44, 0.14);
+      background: linear-gradient(135deg, #141b2b 0%, #090d18 100%);
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 28px 64px rgba(0,0,0,0.5);
       overflow: hidden;
       display: flex;
       align-items: center;
@@ -830,6 +941,7 @@
     @media (max-width: 960px) {
       nav { padding: 1rem 2rem; }
       section { padding: 6rem 2rem; }
+      .section-inner { padding: 0 2rem; }
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
       .about-visual { max-width: 520px; margin: 0 auto; }
       .method-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -837,22 +949,34 @@
       .footer-right { flex-direction: column; gap: 1rem; }
       .cta-section { padding: 6rem 2rem; }
 
-      .hero-light { padding: calc(var(--nav-height) + 2rem) 2rem 4.5rem; min-height: unset; }
+      .hero { padding: calc(var(--nav-height) + 2rem) 2rem 4.5rem; min-height: unset; }
       .hero-media { display: none; }
-      #selected-work { padding: 6rem 2rem 7rem; }
-      .work-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-      .work-panel, .work-panel.secondary { min-height: 420px; }
+      #selected-work { padding: 6rem 0 7rem; }
+      .selected-work-inner { padding: 0 2rem; }
+      .work-grid { gap: 1.5rem; }
+      .work-panel,
+      .work-panel--7,
+      .work-panel--5,
+      .work-panel--full { grid-column: span 12; min-height: 420px; }
     }
 
     @media (max-width: 640px) {
       .nav-links { display: none; }
       .nav-toggle { display: inline-flex; }
       nav > .btn { display: none; }
+      /* Only the logo and the toggle remain, so drop to two columns and let the
+         toggle hold the right edge. */
+      nav { grid-template-columns: 1fr auto; }
 
-      .hero-light { padding: calc(var(--nav-height) + 1.5rem) 1.5rem 4rem; }
-      .hero-light h1 { font-size: 2.5rem; }
-      #selected-work { padding: 5rem 1.5rem 6rem; }
-      .work-panel, .work-panel.secondary { min-height: 340px; }
+      .hero { padding: calc(var(--nav-height) + 1.5rem) 1.5rem 4rem; }
+      .hero h1 { font-size: 2.35rem; }
+      #selected-work { padding: 5rem 0 6rem; }
+      .selected-work-inner { padding: 0 1.5rem; }
+      .section-inner { padding: 0 1.5rem; }
+      .work-panel,
+      .work-panel--7,
+      .work-panel--5,
+      .work-panel--full { min-height: 360px; }
       .work-panel-overlay { padding: 1.75rem; }
     }
 	
@@ -886,7 +1010,7 @@
 
   <!-- NAV -->
   <nav>
-    <a href="#top"><img src="images/Logo/proper-motion-logo-horizontal-black.svg" alt="Proper Motion" class="nav-logo"></a>
+    <a href="#top"><img src="images/Logo/proper-motion-logo-horizontal-white.svg" alt="Proper Motion" class="nav-logo"></a>
     <ul class="nav-links">
       <li><a href="#selected-work">Work</a></li>
       <li><a href="#about">About</a></li>
@@ -909,37 +1033,39 @@
   <main id="main-content">
 
   <!-- HERO -->
-  <div class="hero-light" id="top">
+  <div class="hero" id="top">
     <div class="hero-grid">
-      <div class="hero-light-inner">
-        <p class="eyebrow-onlight">Experience Studio for Science Storytellers</p>
-        <h1>Discover the <span class="accent-word">experience</span><br>hidden in your science.</h1>
-        <p class="hero-sub-light">Proper Motion helps scientists, research teams, and institutions turn complex ideas into interactive experiences people can explore, understand, and feel.</p>
-        <div class="hero-ctas-light">
-          <a href="#how-we-work" class="btn btn-primary">See How We Work</a>
-          <a href="#selected-work" class="btn btn-outline-light">View Selected Work</a>
+      <div class="hero-inner">
+        <p class="hero-eyebrow">Science Experience Studio</p>
+        <h1>Interactive experiences that make complex science <span class="accent-word">tangible</span>.</h1>
+        <p class="hero-sub">We partner with science communication leaders to turn difficult ideas and data into experiences that museum visitors, students, and public audiences can understand, feel, and take part in.</p>
+        <p class="hero-note">Specializing in <strong>astronomy and space science</strong>, and in the emerging technologies that let people experience what they cannot otherwise see, hear, or touch.</p>
+        <div class="hero-ctas">
+          <a href="#selected-work" class="btn btn-primary">See Selected Work</a>
+          <a href="#how-we-work" class="btn btn-outline">How We Work</a>
         </div>
       </div>
       <div class="hero-media">
         <div class="hero-media-frame" id="heroDiscovery">
           <!--
-            Interactive discovery widget: a warm cream abstract surface sits above a
-            deep navy atmospheric layer. Pointer movement gently parallaxes the two
-            layers and opens a soft circular window in the top layer near the cursor,
-            revealing the layer beneath. Replace either SVG with a real image later
-            without changing the surrounding markup or behavior.
+            Interactive discovery widget. The top layer is a dark surface of faint
+            notation, science as it is written down. Beneath it sits a luminous
+            orbital layer, the same science as something you can move through.
+            Pointer movement parallaxes the two and opens a soft circular window in
+            the notation near the cursor, revealing what is underneath. Either SVG
+            can be swapped for a real image later without touching the behavior.
           -->
           <div class="discovery-bg" aria-hidden="true">
             <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="presentation">
               <defs>
                 <radialGradient id="discoveryBgGlow" cx="52%" cy="34%" r="75%">
-                  <stop offset="0%" stop-color="#1d3a63"/>
-                  <stop offset="55%" stop-color="#0d1f3d"/>
-                  <stop offset="100%" stop-color="#050b18"/>
+                  <stop offset="0%" stop-color="#2b5183"/>
+                  <stop offset="55%" stop-color="#132c52"/>
+                  <stop offset="100%" stop-color="#07101f"/>
                 </radialGradient>
               </defs>
               <rect width="400" height="500" fill="url(#discoveryBgGlow)"/>
-              <g fill="none" stroke="rgba(140,180,230,0.32)" stroke-width="1">
+              <g fill="none" stroke="rgba(163,199,243,0.45)" stroke-width="1">
                 <ellipse cx="204" cy="232" rx="152" ry="58"/>
                 <ellipse cx="204" cy="232" rx="108" ry="150" transform="rotate(21 204 232)"/>
                 <ellipse cx="204" cy="232" rx="186" ry="92" transform="rotate(-16 204 232)"/>
@@ -967,8 +1093,8 @@
             <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="presentation">
               <defs>
                 <linearGradient id="discoveryFgGrad" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#f2ede0"/>
-                  <stop offset="100%" stop-color="#e2d9c4"/>
+                  <stop offset="0%" stop-color="#1e2740"/>
+                  <stop offset="100%" stop-color="#0c1220"/>
                 </linearGradient>
               </defs>
               <rect width="400" height="500" fill="url(#discoveryFgGrad)"/>
@@ -1001,79 +1127,164 @@
       <div class="selected-work-head">
         <div class="section-label reveal">Selected Work</div>
         <h2 class="reveal">Where science becomes experience.</h2>
+        <p class="section-intro reveal">One through-line runs across this work. Take something that resists direct perception: a distance, a scale, a rhythm, a point of view we cannot occupy. Then build a way for people to encounter it firsthand.</p>
       </div>
       <div class="work-grid">
-        <div class="work-panel featured reveal">
-          <img src="images/Projects/SpatialSound/Chandra_artist_illustration.jpg" alt="Artist's illustration of NASA's Chandra X-ray Observatory in orbit against a starfield." class="work-panel-img">
+
+        <!-- 1 - Unreleased Space Science Experience -->
+        <!-- Deliberately low-disclosure: collaborator and institutions only, no
+             medium, subject, or interaction detail while the work is unreleased.
+             The artwork is served from a neutral path on purpose. The original
+             copy still lives at images/Projects/SpatialSound/, but that folder
+             name would ship in the page source and give the medium away. -->
+        <div class="work-panel work-panel--7 reveal">
+          <img src="images/Projects/Unreleased/chandra-observatory.jpg" alt="Artist's illustration of NASA's Chandra X-ray Observatory in orbit against a starfield." class="work-panel-img" loading="lazy" decoding="async">
           <div class="work-panel-scrim" aria-hidden="true"></div>
           <div class="work-panel-badge">Active Project</div>
           <div class="work-panel-overlay">
-            <div class="work-eyebrow">Astronomy &middot; Data Experience &middot; XR</div>
-            <h3>Unreleased Science Data Experience</h3>
-            <p class="work-meta">With <a class="text-link" href="https://kimarcand.com" target="_blank" rel="noopener noreferrer">Dr. Kimberly Arcand</a> of the Smithsonian Astrophysical Observatory and NASA's Chandra X-ray Observatory — exploring Chandra data in novel ways.</p>
-            <span class="work-role">R&amp;D Co-Development</span>
+            <div class="work-eyebrow">Astronomy &middot; Space Science &middot; R&amp;D</div>
+            <h3>Unreleased Space Science Experience</h3>
+            <p class="work-meta">With <a class="text-link" href="https://kimarcand.com" target="_blank" rel="noopener noreferrer">Dr. Kimberly Arcand</a> of the Smithsonian Astrophysical Observatory and NASA's Chandra X-ray Observatory, exploring Chandra data in novel ways.</p>
+            <div class="work-foot">
+              <span class="work-role">R&amp;D Co-Development</span>
+            </div>
           </div>
         </div>
-        <div class="work-panel secondary reveal reveal-d1">
-          <img src="images/Projects/Parallel/Screenshot%202026-07-15%20230352.png" alt="Screenshot of the Parallel experience, showing two probes exploring a curved, non-Euclidean spacetime grid." class="work-panel-img">
+
+        <!-- 2 - Where's Roman? -->
+        <div class="work-panel work-panel--5 reveal reveal-d1">
+          <img src="images/Projects/WheresRoman/wheres-roman-panel.png" alt="Title screen of the Where's Roman? explainer: the project name over a black field, with a marker labeled Earth and a readout of days since launch." class="work-panel-img work-panel-img--top" loading="lazy" decoding="async">
+          <div class="work-panel-scrim" aria-hidden="true"></div>
+          <div class="work-panel-badge">Live</div>
+          <div class="work-panel-overlay">
+            <div class="work-eyebrow">Science Communication &middot; Interactive Storytelling &middot; Web</div>
+            <h3>Where&rsquo;s Roman?</h3>
+            <p class="work-meta">A scroll-driven explainer following NASA's Nancy Grace Roman Space Telescope as it travels away from Earth, turning a journey nobody can watch into something the public can follow, day by day.</p>
+            <div class="work-foot">
+              <span class="work-role">Concept, Design &amp; Build</span>
+              <a class="work-link" href="https://wheresroman.netlify.app" target="_blank" rel="noopener noreferrer" aria-label="Visit Where&rsquo;s Roman? (opens in a new tab)">
+                Visit
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 - Celestial Workshop -->
+        <div class="work-panel work-panel--5 work-panel--scrim-strong reveal">
+          <video class="work-panel-img" src="videos/web/celestial-workshop.mp4" poster="images/Projects/CelestialWorkshop/celestial-workshop-poster.jpg" muted loop playsinline preload="none" aria-label="Clip from Celestial Workshop: hands in VR turning a three-dimensional model of the constellation Cassiopeia under a night sky."></video>
+          <div class="work-panel-scrim" aria-hidden="true"></div>
+          <div class="work-panel-badge">Prototype</div>
+          <div class="work-panel-overlay">
+            <div class="work-eyebrow">Astronomy &middot; Hand Interaction &middot; VR</div>
+            <h3>Celestial Workshop</h3>
+            <p class="work-meta">The stars in a constellation sit at wildly different distances; the shape only exists from where we happen to stand. Here you take a constellation in your hands and turn it until it snaps into the view we see from Earth.</p>
+            <div class="work-foot">
+              <span class="work-role">Concept, Design &amp; Build</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 - Beacon -->
+        <div class="work-panel work-panel--7 work-panel--scrim-strong reveal reveal-d1">
+          <video class="work-panel-img" src="videos/web/beacon.mp4" poster="images/Projects/Beacon/beacon-poster.jpg" muted loop playsinline preload="none" aria-label="Clip from Beacon: exoplanet systems laid out as worlds orbiting a star, stepping from one system to the next."></video>
+          <div class="work-panel-scrim" aria-hidden="true"></div>
+          <div class="work-panel-badge">Live</div>
+          <div class="work-panel-overlay">
+            <div class="work-eyebrow">Exoplanets &middot; Data as Rhythm &middot; Web</div>
+            <h3>Beacon</h3>
+            <p class="work-meta">Exoplanet systems rendered as rhythm. Orbital periods become a beat, so the architecture of a distant solar system becomes a pattern you can perceive rather than a table of numbers you have to parse.</p>
+            <div class="work-foot">
+              <span class="work-role">Concept, Design &amp; Build</span>
+              <a class="work-link" href="https://charleneatlas.github.io/Beacon/" target="_blank" rel="noopener noreferrer" aria-label="Visit Beacon (opens in a new tab)">
+                Visit
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 - Parallel -->
+        <div class="work-panel work-panel--full reveal">
+          <img src="images/Projects/Parallel/Screenshot%202026-07-15%20230352.png" alt="Screenshot of the Parallel experience, showing two probes exploring a curved, non-Euclidean spacetime grid." class="work-panel-img" loading="lazy" decoding="async">
           <div class="work-panel-scrim" aria-hidden="true"></div>
           <div class="work-panel-badge">In Development</div>
           <div class="work-panel-overlay">
-            <div class="work-eyebrow">Interactive Science Explainer &middot; Web</div>
+            <div class="work-eyebrow">Non-Euclidean Geometry &middot; Interactive Explainer &middot; Web</div>
             <h3>Parallel</h3>
-            <p class="work-meta">A fun game for experiencing non-Euclidean geometry.</p>
-            <span class="work-role">Prototyping</span>
+            <p class="work-meta">A game for experiencing non-Euclidean geometry, a concept that pictures struggle to convey and that makes sense the moment you can move through it yourself.</p>
+            <div class="work-foot">
+              <span class="work-role">Prototyping</span>
+            </div>
           </div>
         </div>
+
+        <!-- ================================================================
+             ARCHIVED / NOT CURRENTLY SHOWN
+
+             Retired Selected Work entries live here, commented out rather than
+             deleted, so any of them can be restored by uncommenting. Their
+             assets stay in /images and /videos.
+
+             Nothing was retired in this pass: both previously published entries
+             (the Chandra collaboration and Parallel) are still live above. This
+             block is the agreed home for any future retirement.
+        ================================================================= -->
+
       </div>
     </div>
   </section>
 
   <!-- HOW WE WORK -->
-  <section id="how-we-work" class="section-light">
-    <p class="brand-statement reveal">&ldquo;We make complex science feel human.&rdquo;</p>
-    <div class="section-label reveal">How We Work</div>
-    <h2 class="reveal">From complex science to a meaningful experience.</h2>
-    <p class="section-intro reveal">Experience Discovery helps research teams identify what people could explore, hear, manipulate, inhabit, or connect with inside their science and determine which direction is most worth pursuing.</p>
-    <div class="method-grid">
-      <div class="method-item reveal reveal-d1">
-        <div class="method-number">01</div>
-        <h4>Find the opportunity</h4>
-        <p>Clarify the scientific idea, audience, goals, constraints, and the parts of the work that hold the greatest experiential potential.</p>
-      </div>
-      <div class="method-item reveal reveal-d2">
-        <div class="method-number">02</div>
-        <h4>Shape the direction</h4>
-        <p>Explore possible forms through interaction, narrative, visualization, sonification, or other media without assuming a technology in advance.</p>
-      </div>
-      <div class="method-item reveal reveal-d3">
-        <div class="method-number">03</div>
-        <h4>Make it tangible</h4>
-        <p>Create a focused prototype, develop the experience, or prepare a clear direction that can be carried forward to a larger engagement.</p>
+  <section id="how-we-work" class="section-band section-light">
+    <div class="section-inner">
+      <p class="brand-statement reveal">&ldquo;Facts help people understand.<br>Experiences help people care.&rdquo;</p>
+      <div class="section-label reveal">How We Work</div>
+      <h2 class="reveal">A method for making the intangible tangible.</h2>
+      <p class="section-intro reveal">Every engagement begins with Experience Discovery: a structured look at where the experiential potential actually lives inside your science, and which direction is worth building. Our specialty is astronomy and space science, but the method travels wherever a phenomenon is too vast, too small, too slow, too faint, or too abstract to perceive directly.</p>
+      <div class="method-grid">
+        <div class="method-item reveal reveal-d1">
+          <div class="method-number">01</div>
+          <h4>Find the opportunity</h4>
+          <p>Clarify the science, the audience, the goal, and the constraints. Then locate the parts of the work that hold the greatest experiential potential.</p>
+        </div>
+        <div class="method-item reveal reveal-d2">
+          <div class="method-number">02</div>
+          <h4>Shape the direction</h4>
+          <p>Explore possible forms through interaction, narrative, visualization, sound, and embodiment. The technology is chosen to serve the idea, never assumed in advance.</p>
+        </div>
+        <div class="method-item reveal reveal-d3">
+          <div class="method-number">03</div>
+          <h4>Make it tangible</h4>
+          <p>Build a focused prototype, develop the full experience, or hand over a clear, evidenced direction that can be carried into a larger engagement.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ABOUT -->
-  <section id="about" class="section-light section-light--alt">
-    <div class="about-grid">
-      <div class="about-text">
-        <div class="section-label reveal">About</div>
-        <h2 class="reveal">Science deserves<br>a creative partner.</h2>
-        <p class="reveal">Proper Motion was founded by Charlene Atlas, a creative technologist and experience designer whose work spans XR, interactive systems, and emerging technology.</p>
-        <p class="reveal">After partnering with researchers and scientists at Microsoft and Meta — helping transform emerging technologies into experiences that could be explored, understood, and evaluated — Charlene founded Proper Motion to explore a bigger question:<br><br>What if scientific discovery could be experienced instead of merely explained?</p>
-        <div class="move-callout reveal">
-          <span>Move people to understand.</span>
-          <span>Move people to remember.</span>
-          <span>Move people to feel.</span>
+  <section id="about" class="section-band section-dark-alt">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-text">
+          <div class="section-label reveal">About</div>
+          <h2 class="reveal">A studio with<br>a point of view.</h2>
+          <p class="reveal">Proper Motion is a science experience studio. We partner with observatories, research institutions, museums, universities, and mission teams, designing and building the experiences that make their science perceptible to the people they are trying to reach.</p>
+          <p class="reveal">The studio was founded by Charlene Atlas, a creative technologist and experience designer whose work spans XR, interactive systems, and emerging technology. After years partnering with researchers and scientists at Microsoft and Meta, turning emerging technology into experiences that could be explored, understood, and evaluated, she started Proper Motion around a bigger question:<br><br>What if scientific discovery could be experienced instead of merely explained?</p>
+          <p class="reveal">That question now has a specialty attached to it. In astronomy and space science, almost everything worth understanding is too far, too large, too faint, or too slow to encounter directly. That makes it the sharpest possible test of the studio&rsquo;s craft.</p>
+          <div class="move-callout reveal">
+            <span>Move people to understand.</span>
+            <span>Move people to remember.</span>
+            <span>Move people to feel.</span>
+          </div>
+          <a href="https://charleneatlas.com" target="_blank" rel="noopener" class="about-link reveal">
+            Meet the founder
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
         </div>
-        <a href="https://charleneatlas.com" target="_blank" rel="noopener" class="about-link reveal">
-          Meet the founder
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-      <div class="about-visual">
-		<img src="images/founder_smaller_cropped.jpg" alt="Charlene Atlas, founder of Proper Motion" class="founder-photo">
+        <div class="about-visual">
+          <img src="images/founder_smaller_cropped.jpg" alt="Charlene Atlas, founder of Proper Motion" class="founder-photo" loading="lazy" decoding="async">
+        </div>
       </div>
     </div>
   </section>
@@ -1083,7 +1294,7 @@
     <div class="cta-content">
       <div class="section-label reveal" style="justify-content:center; margin-bottom:1.5rem;">Start a Conversation</div>
       <h2 class="reveal">Tell us what you’re trying to help people understand.</h2>
-      <p class="reveal">Whether you’re communicating research, exploring a new direction, or helping others engage with complex information, Proper Motion can help transform difficult concepts into experiences people can explore, understand, and feel.</p>
+      <p class="reveal">A mission to explain, a dataset worth opening up, a public program built on research you care about. If the idea is hard to see, hear, or picture, that is exactly where we start.</p>
       <div class="cta-actions reveal">
         <a href="https://calendly.com/charlene-atlas/30min" target="_blank" rel="noopener" class="btn btn-primary">Book a Call</a>
         <a href="mailto:hello@propermotion.co" class="btn btn-outline">Send a Message</a>
@@ -1190,9 +1401,11 @@
         } else {
           discoveryPanel.classList.add('discovery-interactive');
 
+          var REST_REVEAL = 0.4;
+
           var dTargetX = 0.5, dTargetY = 0.5;
           var dCurX = 0.5, dCurY = 0.5;
-          var dTargetReveal = 0, dCurReveal = 0;
+          var dTargetReveal = REST_REVEAL, dCurReveal = 0;
           var dRaf = null;
 
           var setDiscoveryTarget = function (clientX, clientY) {
@@ -1235,16 +1448,50 @@
           });
 
           discoveryPanel.addEventListener('mouseleave', function () {
-            dTargetReveal = 0;
+            dTargetReveal = REST_REVEAL;
             dTargetX = 0.5;
             dTargetY = 0.5;
             ensureDiscoveryLoop();
           });
+
+          // Ease the resting aperture open once on load.
+          ensureDiscoveryLoop();
         }
       }
     } catch (err) {
       // The discovery widget is purely decorative; fail silently and leave
       // the static warm-cream surface in place.
+    }
+  </script>
+
+  <script>
+    // ── WORK PANEL VIDEO ── (progressive enhancement, isolated + fail-safe)
+    // Clips are muted, silent loops used as panel artwork. They stay on their
+    // poster until scrolled into view, and pause again on the way out, so the
+    // page never downloads or decodes video the visitor isn't looking at.
+    // Reduced-motion visitors keep the poster frame and nothing ever plays.
+    try {
+      var panelVideos = document.querySelectorAll('video.work-panel-img');
+      var noMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (panelVideos.length && !noMotion && 'IntersectionObserver' in window) {
+        var videoObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            var v = entry.target;
+            if (entry.isIntersecting) {
+              if (v.preload === 'none') v.preload = 'auto';
+              var playing = v.play();
+              if (playing && playing.catch) playing.catch(function () { /* autoplay blocked: poster stands in */ });
+            } else if (!v.paused) {
+              v.pause();
+            }
+          });
+        }, { threshold: 0.25 });
+
+        panelVideos.forEach(function (v) { videoObserver.observe(v); });
+      }
+    } catch (err) {
+      // Panel video is decorative; the poster frame is a complete fallback.
     }
   </script>
 

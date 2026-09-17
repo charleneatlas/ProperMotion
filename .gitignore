@@ -1,0 +1,5 @@
+# Video masters: multi-hundred-MB source recordings that should never enter git
+# history. The web-optimized, silent loops the site actually serves live in
+# videos/web/ and are committed.
+videos/*
+!videos/web/
