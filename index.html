@@ -5,11 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Proper Motion | Interactive Experiences That Make Science Tangible</title>
-  <meta name="description" content="Proper Motion is a science experience studio building interactive experiences that make complex science tangible. We partner with science communication leaders to turn difficult ideas and data into experiences public audiences can understand, feel, and take part in, with particular depth in astronomy and space science.">
+  <meta name="description" content="Proper Motion is a science experience studio. We turn complex ideas, data, and discoveries into interactive experiences audiences can understand, feel, and take part in, both for the science communication leaders who hire us and as original work of our own. Particular depth in astronomy and space science.">
   <meta name="theme-color" content="#05070e">
   <link rel="icon" href="favicon.png" type="image/png">
   <meta property="og:title" content="Proper Motion | Interactive Experiences That Make Science Tangible">
-  <meta property="og:description" content="We partner with science communication leaders to turn difficult ideas and data into experiences public audiences can understand, feel, and take part in.">
+  <meta property="og:description" content="Make your science tangible. Proper Motion turns complex ideas, data, and discoveries into interactive experiences audiences can understand, feel, and take part in.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://propermotion.co/">
   <meta name="twitter:card" content="summary_large_image">
@@ -693,6 +693,18 @@
     .work-link svg { transition: transform 0.2s; }
     .work-link:hover svg { transform: translate(2px, -2px); }
 
+    .work-rel {
+      /* Always claims its own line in the foot, so the label sits in the same
+         place on every panel instead of wrapping differently per panel width. */
+      flex: 0 0 100%;
+      margin-bottom: -0.25rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(221,227,240,0.58);
+    }
+
     .work-role {
       display: inline-flex;
       font-size: 0.72rem;
@@ -1036,10 +1048,10 @@
   <div class="hero" id="top">
     <div class="hero-grid">
       <div class="hero-inner">
-        <p class="hero-eyebrow">Science Experience Studio</p>
-        <h1>Interactive experiences that make complex science <span class="accent-word">tangible</span>.</h1>
-        <p class="hero-sub">We partner with science communication leaders to turn difficult ideas and data into experiences that museum visitors, students, and public audiences can understand, feel, and take part in.</p>
-        <p class="hero-note">Specializing in <strong>astronomy and space science</strong>, and in the emerging technologies that let people experience what they cannot otherwise see, hear, or touch.</p>
+        <p class="hero-eyebrow">For Science Communication Leaders</p>
+        <h1>Make your science <span class="accent-word">tangible</span>.</h1>
+        <p class="hero-sub">You have complex ideas, data, and discoveries to communicate. We turn them into interactive experiences your audiences can understand, feel, and take part in.</p>
+        <p class="hero-note">Specializing in <strong>astronomy and space science</strong>, using emerging technologies to let people experience what they cannot otherwise see, hear, or touch.</p>
         <div class="hero-ctas">
           <a href="#selected-work" class="btn btn-primary">See Selected Work</a>
           <a href="#how-we-work" class="btn btn-outline">How We Work</a>
@@ -1127,7 +1139,7 @@
       <div class="selected-work-head">
         <div class="section-label reveal">Selected Work</div>
         <h2 class="reveal">Where science becomes experience.</h2>
-        <p class="section-intro reveal">One through-line runs across this work. Take something that resists direct perception: a distance, a scale, a rhythm, a point of view we cannot occupy. Then build a way for people to encounter it firsthand.</p>
+        <p class="section-intro reveal">Client collaborations with scientific organizations, alongside original experiences developed inside the studio. One through-line runs across both. Take something that resists direct perception: a distance, a scale, a rhythm, a point of view we cannot occupy. Then build a way for people to encounter it firsthand.</p>
       </div>
       <div class="work-grid">
 
@@ -1144,8 +1156,9 @@
           <div class="work-panel-overlay">
             <div class="work-eyebrow">Astronomy &middot; Space Science &middot; R&amp;D</div>
             <h3>Unreleased Space Science Experience</h3>
-            <p class="work-meta">With <a class="text-link" href="https://kimarcand.com" target="_blank" rel="noopener noreferrer">Dr. Kimberly Arcand</a> of the Smithsonian Astrophysical Observatory and NASA's Chandra X-ray Observatory, exploring Chandra data in novel ways.</p>
+            <p class="work-meta">Developed with <a class="text-link" href="https://kimarcand.com" target="_blank" rel="noopener noreferrer">Dr. Kimberly Arcand</a> of the Smithsonian Astrophysical Observatory and NASA's Chandra X-ray Observatory, exploring Chandra data in novel ways.</p>
             <div class="work-foot">
+              <span class="work-rel">Client Project</span>
               <span class="work-role">R&amp;D Co-Development</span>
             </div>
           </div>
@@ -1161,6 +1174,7 @@
             <h3>Where&rsquo;s Roman?</h3>
             <p class="work-meta">A scroll-driven explainer following NASA's Nancy Grace Roman Space Telescope as it travels away from Earth, turning a journey nobody can watch into something the public can follow, day by day.</p>
             <div class="work-foot">
+              <span class="work-rel">Proper Motion Original</span>
               <span class="work-role">Concept, Design &amp; Build</span>
               <a class="work-link" href="https://wheresroman.netlify.app" target="_blank" rel="noopener noreferrer" aria-label="Visit Where&rsquo;s Roman? (opens in a new tab)">
                 Visit
@@ -1178,8 +1192,9 @@
           <div class="work-panel-overlay">
             <div class="work-eyebrow">Astronomy &middot; Hand Interaction &middot; VR</div>
             <h3>Celestial Workshop</h3>
-            <p class="work-meta">The stars in a constellation sit at wildly different distances; the shape only exists from where we happen to stand. Here you take a constellation in your hands and turn it until it snaps into the view we see from Earth.</p>
+            <p class="work-meta">The stars in a constellation sit at wildly different distances; the shape only exists from where we happen to stand. Here you take a constellation in your hands and turn it until it snaps into the view we see from Earth. Developed through the Meta Hands First VR Accelerator.</p>
             <div class="work-foot">
+              <span class="work-rel">Proper Motion Original</span>
               <span class="work-role">Concept, Design &amp; Build</span>
             </div>
           </div>
@@ -1195,6 +1210,7 @@
             <h3>Beacon</h3>
             <p class="work-meta">Exoplanet systems rendered as rhythm. Orbital periods become a beat, so the architecture of a distant solar system becomes a pattern you can perceive rather than a table of numbers you have to parse.</p>
             <div class="work-foot">
+              <span class="work-rel">Proper Motion Original</span>
               <span class="work-role">Concept, Design &amp; Build</span>
               <a class="work-link" href="https://charleneatlas.github.io/Beacon/" target="_blank" rel="noopener noreferrer" aria-label="Visit Beacon (opens in a new tab)">
                 Visit
@@ -1214,6 +1230,7 @@
             <h3>Parallel</h3>
             <p class="work-meta">A game for experiencing non-Euclidean geometry, a concept that pictures struggle to convey and that makes sense the moment you can move through it yourself.</p>
             <div class="work-foot">
+              <span class="work-rel">Proper Motion Original</span>
               <span class="work-role">Prototyping</span>
             </div>
           </div>
@@ -1240,7 +1257,7 @@
     <div class="section-inner">
       <p class="brand-statement reveal">&ldquo;Facts help people understand.<br>Experiences help people care.&rdquo;</p>
       <div class="section-label reveal">How We Work</div>
-      <h2 class="reveal">A method for making the intangible tangible.</h2>
+      <h2 class="reveal">Bring us the science. We&rsquo;ll find the experience inside it.</h2>
       <p class="section-intro reveal">Every engagement begins with Experience Discovery: a structured look at where the experiential potential actually lives inside your science, and which direction is worth building. Our specialty is astronomy and space science, but the method travels wherever a phenomenon is too vast, too small, too slow, too faint, or too abstract to perceive directly.</p>
       <div class="method-grid">
         <div class="method-item reveal reveal-d1">
@@ -1269,7 +1286,7 @@
         <div class="about-text">
           <div class="section-label reveal">About</div>
           <h2 class="reveal">A studio with<br>a point of view.</h2>
-          <p class="reveal">Proper Motion is a science experience studio. We partner with observatories, research institutions, museums, universities, and mission teams, designing and building the experiences that make their science perceptible to the people they are trying to reach.</p>
+          <p class="reveal">Proper Motion is a science experience studio. We partner with observatories, research institutions, museums, universities, and mission teams, designing and building the experiences that make their science perceptible to the people they are trying to reach. We also develop and release experiences of our own, built on questions we think are worth putting in front of people.</p>
           <p class="reveal">The studio was founded by Charlene Atlas, a creative technologist and experience designer whose work spans XR, interactive systems, and emerging technology. After years partnering with researchers and scientists at Microsoft and Meta, turning emerging technology into experiences that could be explored, understood, and evaluated, she started Proper Motion around a bigger question:<br><br>What if scientific discovery could be experienced instead of merely explained?</p>
           <p class="reveal">That question now has a specialty attached to it. In astronomy and space science, almost everything worth understanding is too far, too large, too faint, or too slow to encounter directly. That makes it the sharpest possible test of the studio&rsquo;s craft.</p>
           <div class="move-callout reveal">
